@@ -4,8 +4,8 @@
 
 import click
 
-from pf_manager.pfm_command.delete import DeleteCommand
-from pf_manager.pfm_command.list import ListCommand
+from pf_manager.pf_command.delete import DeleteCommand
+from pf_manager.pf_command.list import ListCommand
 
 
 class PFMGroup(click.Group):
