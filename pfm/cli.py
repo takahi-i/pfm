@@ -5,13 +5,49 @@
 import click
 
 
-@click.command()
-def main(args=None):
-    """Console script for pfm."""
-    click.echo("Replace this message by putting your code into "
-               "pfm.cli.main")
-    click.echo("See click documentation at http://click.pocoo.org/")
+class PFMGroup(click.Group):
+    def invoke(self, ctx):
+        ctx.obj = {}
+        super(PFMGroup, self).invoke(ctx)
 
 
-if __name__ == "__main__":
+@click.group(cls=PFMGroup, help='port forwarding manager')
+@click.option('-c', '--config', type=str, help="configuration file (DEFAULT $HOME/.pfm)")
+@click.pass_context
+def main(ctx, config):
+    ctx.obj['config'] = ctx.params["config"]
+
+
+@main.command(help='add port forwarding target')
+@click.pass_context
+def add(ctx):
+    print("called add")
+    pass
+
+
+@main.command(help='list existing targets')
+@click.pass_context
+def list(ctx):
+    print(ctx.obj['config'])
+    print("called list")
+    pass
+
+
+@main.command(help='delete specified target')
+@click.argument('name')
+@click.pass_context
+def delete(ctx, name):
+    print("called delete")
+    pass
+
+
+@main.command(help='generate ssh port forward parameters')
+@click.argument('name')
+@click.pass_context
+def parameter(ctx):
+    print("called parameter")
+    pass
+
+
+if __name__ == '__main__':
     main()
