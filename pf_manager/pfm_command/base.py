@@ -1,10 +1,10 @@
-# from abc import ABCMeta, abstractmethod
+from abc import ABCMeta, abstractmethod
 
 
 class BaseCommand:
     def __init__(self, config):
         self.config = config
 
-    #   @abstractmethod
+    @abstractmethod
     def run(self):
         pass
