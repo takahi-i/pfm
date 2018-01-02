@@ -4,6 +4,9 @@
 
 import click
 
+from pf_manager.pfm_command.delete import DeleteCommand
+from pf_manager.pfm_command.list import ListCommand
+
 
 class PFMGroup(click.Group):
     def invoke(self, ctx):
@@ -28,16 +31,14 @@ def add(ctx):
 @main.command(help='list existing targets')
 @click.pass_context
 def list(ctx):
-    print(ctx.obj['config'])
-    print("called list")
-    pass
+    ListCommand(ctx).run()
 
 
 @main.command(help='delete specified target')
 @click.argument('name')
 @click.pass_context
 def delete(ctx, name):
-    print("called delete")
+    DeleteCommand(ctx).run()
     pass
 
 

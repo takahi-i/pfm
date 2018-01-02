@@ -32,10 +32,10 @@ setup(
     author="Takahiko Ito",
     author_email='takahiko03@gmail.com',
     url='https://github.com/takahi-i/pfm',
-    packages=find_packages(include=['pfm']),
+    packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'pfm=pfm.cli:main'
+            'pfm=pf_manager.cli:main'
         ]
     },
     include_package_data=True,
