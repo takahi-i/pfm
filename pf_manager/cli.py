@@ -7,6 +7,7 @@ import click
 from pf_manager.pf_command.add import AddCommand
 from pf_manager.pf_command.delete import DeleteCommand
 from pf_manager.pf_command.list import ListCommand
+from pf_manager.pf_command.param import ParameterCommand
 
 
 class PFMGroup(click.Group):
@@ -40,15 +41,13 @@ def list(ctx):
 @click.pass_context
 def delete(ctx, name):
     DeleteCommand(ctx).run()
-    pass
 
 
 @main.command(help='generate ssh port forward parameters')
 @click.argument('name')
 @click.pass_context
-def parameter(ctx):
-    print("called parameter")
-    pass
+def param(ctx, name):
+    ParameterCommand(ctx).run()
 
 
 if __name__ == '__main__':
