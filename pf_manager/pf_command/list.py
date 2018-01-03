@@ -14,15 +14,15 @@ class ListCommand(BaseCommand):
         json_data = json.load(f)
         rows = self.convert_ditionary_to_2d_array(json_data)
         table = Texttable()
-        table.set_cols_align(["l", "l", "l", "l", "l", "l", "l"])
-        table.set_cols_width([20,  10,  10,  30,  10,  30,  12])
+        table.set_cols_align(["l", "l", "l", "l", "l", "l", "l", "l"])
+        table.set_cols_width([20,  10,  10,  30,  10,  15,  30,  12])
         table.add_rows(rows)
         print(table.draw())
         f.close()
         pass
 
     def convert_ditionary_to_2d_array(self, json_data):
-        header = ["name", "type", "local_port", "remote_host", "host_port", "ssh_server", "server_port"]
+        header = ["name", "type", "local_port", "remote_host", "host_port", "login_user", "ssh_server", "server_port"]
         body = []
         for name in json_data.keys():
             target = json_data[name]
