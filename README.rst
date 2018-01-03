@@ -2,6 +2,21 @@
 pfm -- a ssh port forward manager for data engineers
 =====================================================
 
+Local computers are not enough to handle large amount of data.
+In addition, we launch one Jupyter Notebook server for each machine learning task.
+Usually local computers are not enough to handle multiple machine learning tasks.
+And therefore data scientists do their experiments with Jupyter Notebook
+launched in remote hosts such as EC2
+
+To connect Jupyter Notebook servers in remote hosts, we use ssh port forwarding.
+Port forwarding is useful since using multiple servers, since we do not consume resources in local PC.
+
+Unfortunately, when connecting multiple server in different hosts and ports numbers, we easily forget
+the port or conflict the local port numbers.
+
+pfm manager the remote hosts and port numbers used in port forwarding. Users understand which local
+ports are used and which ports are not. Once users register the port forwarding information, pfm generates
+ssh parameters any time specifying the task name.
 
 Install
 =======
