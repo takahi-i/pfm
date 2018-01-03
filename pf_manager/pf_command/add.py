@@ -10,7 +10,6 @@ class AddCommand(BaseCommand):
         self.params = config.params
         self.ssh_param_str = config.params["ssh_param"]
         self.name = config.params["name"]
-        self.config_path = config.obj["config"]
 
     def run(self):
         f = open(self.config_path, 'r')

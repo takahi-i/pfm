@@ -8,7 +8,6 @@ class DeleteCommand(BaseCommand):
     def __init__(self, config):
         super(DeleteCommand, self).__init__(config)
         self.name = config.params["name"]
-        self.config_path = config.obj["config"]
 
     def run(self):
         f = open(self.config_path, 'r')
