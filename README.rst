@@ -32,6 +32,9 @@ Usage
 Register ssh port forwarding
 -----------------------------
 
+
+``pfm add `` registers port forward settings.
+
 ::
 
     $ pfm add -n image-classification --local_port 9999 --host_port 8888 --ssh_server takahi-i-i.ml.aws.com --remote_host localhost
@@ -40,22 +43,34 @@ Register ssh port forwarding
 Generate ssh port forward parameters
 -------------------------------------
 
+
+After the registration of port forward settings with ``pfm add `` , we can generate ssh parameters with `pfm param`.
+
 ::
 
-    $ ssh `pfm food-nonfood`
+    $ ssh `pfm param image-classification`
 
 
 List registered ssh ports
 --------------------------
 
+We can see the list of registered port forward settings.
+
 ::
 
     $ pfm list
-    image-experiments my-ml-instance.ml.aws.com 6666 8888
-    text-classification my-ml-instance.ml.aws.com 6666 8888
+    +----------------------+------------+------------+--------------------------------+------------+-----------------+--------------------------------+--------------+
+    |         name         |    type    | local_port |          remote_host           | host_port  |   login_user    |           ssh_server           | server_port  |
+    +======================+============+============+================================+============+=================+================================+==============+
+    | image-processing     | L          | 9999       | localhost                      | 8888       | None            | my-ml-instance.aws.com         |              |
+    +----------------------+------------+------------+--------------------------------+------------+-----------------+--------------------------------+--------------+
+    | text-processing      | L          | 7777       | localhost                      | 8888       | None            | my-ml-instance-2.aws.com       |              |
+    +----------------------+------------+------------+--------------------------------+------------+-----------------+--------------------------------+--------------+
 
 Delete registerd forwarding element
 -----------------------------------
+
+When a port forward settings is not needed, we can remove the setting with ``pfm delete`` command
 
 ::
 
