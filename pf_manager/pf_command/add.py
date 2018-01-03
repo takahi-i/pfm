@@ -31,7 +31,7 @@ class AddCommand(BaseCommand):
 
     def __extract_target_from_params(self):
         target = {
-            "type": self.params["forward_type"], "remote_host": self.params["remote_host"],
+            "type": self.params["forward_type"], "remote_host": self.params["remote_host"], "name": self.name,
             "host_port": self.params["host_port"], "ssh_server": self.params["ssh_server"]
         }
 
@@ -49,10 +49,10 @@ class AddCommand(BaseCommand):
     def __generate_from_string(self, json_data):
         forward_type, first_port, host, second_port, login_user, ssh_server = self.__parse(self.ssh_param_str)
         if forward_type == "L":
-            json_data[self.name] = {"type": forward_type, "remote_host": host, "ssh_server": ssh_server,
+            json_data[self.name] = {"type": forward_type, "remote_host": host, "ssh_server": ssh_server, "name": self.name,
                                     "local_port": first_port, "host_port": second_port, "login_user": login_user}
         elif forward_type == "R":
-            json_data[self.name] = {"type": forward_type, "remote_host": host, "ssh_server": ssh_server,
+            json_data[self.name] = {"type": forward_type, "remote_host": host, "ssh_server": ssh_server, "name": self.name,
                                     "server_port": first_port, "host_port": second_port, "login_user": login_user}
         else:
             raise RuntimeError("No type as " + forward_type)
