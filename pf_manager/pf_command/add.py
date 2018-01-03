@@ -32,6 +32,10 @@ class AddCommand(BaseCommand):
             "type": self.params["forward_type"], "remote_host": self.params["remote_host"],
             "host_port": self.params["host_port"], "ssh_server": self.params["ssh_server"]
         }
+
+        if "login_user" in self.params:
+            target["login_user"] = self.params["login_user"]
+
         if self.params["forward_type"] == 'L':
             target["local_port"] = self.params["local_port"]
         elif self.params["forward_type"] == 'R':
