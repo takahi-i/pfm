@@ -4,6 +4,7 @@
 
 import click
 
+from pf_manager.pf_command.add import AddCommand
 from pf_manager.pf_command.delete import DeleteCommand
 from pf_manager.pf_command.list import ListCommand
 
@@ -23,10 +24,10 @@ def main(ctx, config):
 
 @main.command(help='add port forwarding target')
 @click.pass_context
-def add(ctx):
-    print("called add")
-    pass
-
+@click.option('-n', '--name', type=str, help="name of port fowarding")
+@click.argument('ssh_param')
+def add(ctx, name, ssh_param):
+    AddCommand(ctx).run()
 
 @main.command(help='list existing targets')
 @click.pass_context
