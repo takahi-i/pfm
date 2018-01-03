@@ -3,6 +3,7 @@
 """Console script for pfm."""
 
 import click
+import os
 
 from pf_manager.pf_command.add import AddCommand
 from pf_manager.pf_command.delete import DeleteCommand
@@ -20,7 +21,10 @@ class PFMGroup(click.Group):
 @click.option('-c', '--config', type=str, help="configuration file (DEFAULT $HOME/.pfm)")
 @click.pass_context
 def main(ctx, config):
-    ctx.obj['config'] = ctx.params["config"]
+    if ctx.params["config"] is None:
+        ctx.obj['config'] = os.environ.get("HOME") + "/.pfm"
+    else:
+        ctx.obj['config'] = ctx.params["config"]
 
 
 @main.command(help='add port forwarding target')
@@ -30,6 +34,7 @@ def main(ctx, config):
 def add(ctx, name, ssh_param):
     AddCommand(ctx).run()
 
+
 @main.command(help='list existing targets')
 @click.pass_context
 def list(ctx):
@@ -37,6 +42,7 @@ def list(ctx):
 
 
 @main.command(help='delete specified target')
+@click.option('-n', '--name', type=str, help="name of port fowarding")
 @click.argument('name')
 @click.pass_context
 def delete(ctx, name):
