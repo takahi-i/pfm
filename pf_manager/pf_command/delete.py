@@ -1,6 +1,7 @@
 import json
 
 from pf_manager.pf_command.base import BaseCommand
+from pf_manager.util.log import logger
 
 
 class DeleteCommand(BaseCommand):
@@ -12,7 +13,8 @@ class DeleteCommand(BaseCommand):
     def run(self):
         f = open(self.config_path, 'r')
         json_data = json.load(f)
-        target = json_data.pop(self.name)
+        json_data.pop(self.name)
+        logger.info('Deleted target ' + self.name + '...')
         f.close()
 
         # write the target

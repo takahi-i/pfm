@@ -1,6 +1,7 @@
 import json
 import re
 from pf_manager.pf_command.base import BaseCommand
+from pf_manager.util.log import logger
 
 
 class AddCommand(BaseCommand):
@@ -15,8 +16,10 @@ class AddCommand(BaseCommand):
         f = open(self.config_path, 'r')
         targets = json.load(f)
         if self.params["ssh_server"] is not None:
+            logger.info("Register target from params...")
             targets[self.name] = self.__extract_target_from_params()
         elif self.ssh_param_str is not None:
+            logger.info("Register target from argument string...")
             self.__generate_from_string(targets)
         else:
             raise RuntimeError("given parameters are invalid: " + str(self.params))
