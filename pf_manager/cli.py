@@ -3,6 +3,7 @@
 """Console script for pfm."""
 
 import click
+from click import ClickException
 import os
 
 from pf_manager.pf_command.add import AddCommand
@@ -29,11 +30,19 @@ def main(ctx, config):
 
 @main.command(help='add port forwarding target')
 @click.pass_context
-@click.option('-n', '--name', type=str, help="name of port fowarding")
-@click.argument('ssh_param')
-def add(ctx, name, ssh_param):
-    AddCommand(ctx).run()
-
+@click.option('-n', '--name', type=str, help="name of port fowarding", required=False)
+@click.option('--forward_type', type=str, help="port forwarding type [L or R]", required=False, default='L')
+@click.option('--local_port', type=str, help="local port", required=False)
+@click.option('--host_port', type=str, help="remote host port", required=False)
+@click.option('--ssh_server', type=str, help="server to ssh login", required=False)
+@click.option('--server_port', type=str, help="server port", required=False)
+@click.option('--remote_host', type=str, help="remote host for port forwarding", required=False)
+@click.argument('ssh_param', required=False)
+def add(ctx, name, forward_type, local_port, host_port, ssh_server, server_port, remote_host, ssh_param):
+    try:
+        AddCommand(ctx).run()
+    except RuntimeError as error:
+        raise ClickException(error)
 
 @main.command(help='list existing targets')
 @click.pass_context
