@@ -21,6 +21,8 @@ ssh parameters any time specifying the task name.
 Install
 =======
 
+We can install pfm with pip.
+
 ::
 
     pip install pfm
@@ -29,10 +31,10 @@ Install
 Usage
 =====
 
-Register ssh port forwarding
------------------------------
+Register settings of ssh port forwarding
+-----------------------------------------
 
-We register port forward settings with `pfm add` command.
+:code:`pfm add` registers port forward settings.
 
 ::
 
@@ -43,9 +45,9 @@ We register port forward settings with `pfm add` command.
 ::
 
     Usage: pfm add [OPTIONS] [SSH_PARAM]
-    
+
     add port forwarding target
-    
+
     Options:
         -n, --name TEXT        name of port fowarding
         --forward_type TEXT    port forwarding type [L (local) or R (remote)]
@@ -61,7 +63,7 @@ Generate ssh port forward parameters
 -------------------------------------
 
 
-After the registration of port forward settings with ``pfm add `` , we can generate ssh parameters with `pfm param`.
+After the registration of port forward settings with :code:`pfm add` , we can generate ssh parameters with :code:`pfm param`.
 
 ::
 
@@ -87,7 +89,7 @@ We can see the list of registered port forward settings.
 Delete registerd forwarding element
 -----------------------------------
 
-When a port forward settings is not needed, we can remove the setting with ``pfm delete`` command
+When a port forward settings is not needed, we can remove the setting with :code:`pfm delete` command
 
 ::
 
