@@ -34,17 +34,22 @@ Usage
 Register settings of ssh port forwarding
 -----------------------------------------
 
-:code:`pfm add` registers port forward settings.
+:code:`pfm add` registers port forward settings. :code:`pfm add` provides two style of registrations.
+
+Register settings with options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following is a sample of adding port forward settings with command line options.
 
 ::
 
     $ pfm add -n image-classification --local_port 9999 --host_port 8888 --ssh_server takahi-i-i.ml.aws.com --remote_host localhost
 
-`pfm add` provides the following options.
+:code:`pfm add` provides the following options.
 
 ::
 
-    Usage: pfm add [OPTIONS] [SSH_PARAM]
+    Usage: pfm add [OPTIONS]
 
     add port forwarding target
 
@@ -59,9 +64,24 @@ Register settings of ssh port forwarding
         --login_user TEXT      login user of ssh server
         --help                 Show this message and exit.
 
+
+
+Register settings with a argument
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you think adding many options are tedious, :code:`pfm add` also provides argument style of registration.
+
+The following is a sample of registration which forwards port 8888 in takahi-i-ml.aws.com to port 9999 of localhost with a local port forward setting.
+
+::
+
+    $pfm add -n image-classification "L 9999:localhost:8888 takahi-i-ml.aws.com"
+
+As we see the above example is simple and just uses :code:`-n` option. Note that the first character :code:`L` indicates the port forward setting is local.
+When you want set remote, please set :code:`R`.
+
 Generate ssh port forward parameters
 -------------------------------------
-
 
 After the registration of port forward settings with :code:`pfm add` , we can generate ssh parameters with :code:`pfm param`.
 
