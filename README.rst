@@ -43,7 +43,7 @@ The following is a sample of adding port forward settings with command line opti
 
 ::
 
-    $ pfm add -n image-classification --local_port 9999 --host_port 8888 --ssh_server takahi-i-i.ml.aws.com --remote_host localhost
+    $ pfm add -n image-classification --local-port 9999 --host-port 8888 --ssh-server takahi-i-i.ml.aws.com --remote-host localhost
 
 :code:`pfm add` provides the following options.
 
@@ -55,13 +55,13 @@ The following is a sample of adding port forward settings with command line opti
 
     Options:
         -n, --name TEXT        name of port fowarding
-        --forward_type TEXT    port forwarding type [L (local) or R (remote)]
-        --local_port INTEGER   local port
-        --host_port INTEGER    remote host port
-        --ssh_server TEXT      server to ssh login
-        --server_port INTEGER  server port
-        --remote_host TEXT     remote host for port forwarding
-        --login_user TEXT      login user of ssh server
+        --forward-type TEXT    port forwarding type [L (local) or R (remote)]
+        --local-port INTEGER   local port
+        --host-port INTEGER    remote host port
+        --ssh-server TEXT      server to ssh login
+        --server-port INTEGER  server port
+        --remote-host TEXT     remote host for port forwarding
+        --login-user TEXT      login user of ssh server
         --help                 Show this message and exit.
 
 

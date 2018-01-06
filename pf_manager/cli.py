@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Console script for pfm."""
+n"""Console script for pfm."""
 
 import click
 from click import ClickException
@@ -31,14 +31,14 @@ def main(ctx, config):
 @main.command(help='add port forwarding target')
 @click.pass_context
 @click.option('-n', '--name', type=str, help="name of port fowarding", required=False)
-@click.option('--forward_type', type=str, help="port forwarding type [L or R]", required=False, default='L')
-@click.option('--local_port', type=int, help="local port", required=False)
-@click.option('--host_port', type=int, help="remote host port", required=False)
-@click.option('--ssh_server', type=str, help="server to ssh login", required=False)
-@click.option('--server_port', type=int, help="server port", required=False)
-@click.option('--remote_host', type=str, help="remote host for port forwarding", required=False)
-@click.option('--login_user', type=str, help="login user of ssh server", required=False)
-@click.argument('ssh_argument', required=False)
+@click.option('--forward-type', type=str, help="port forwarding type [L or R]", required=False, default='L')
+@click.option('--local-port', type=int, help="local port", required=False)
+@click.option('--host-port', type=int, help="remote host port", required=False)
+@click.option('--ssh-server', type=str, help="server to ssh login", required=False)
+@click.option('--server-port', type=int, help="server port", required=False)
+@click.option('--remote-host', type=str, help="remote host for port forwarding", required=False)
+@click.option('--login-user', type=str, help="login user of ssh server", required=False)
+@click.argument('ssh-argument', required=False)
 def add(ctx, name, forward_type, local_port, host_port, ssh_server, server_port, remote_host, login_user, ssh_argument):
     try:
         AddCommand(ctx).run()
