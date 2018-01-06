@@ -5,24 +5,32 @@ from pf_manager.util.log import logger
 
 
 class AddCommand(BaseCommand):
+
+    DEFAULT_TYPE = "L"
+
     def __init__(self, config):
         super(AddCommand, self).__init__(config)
         self.params = config.params
-        self.ssh_param_str = config.params["ssh_param"]
-        self.name = config.params["name"]
+        self.ssh_param_str = config.params.get("ssh_argument", None)
+        self.forward_type = config.params.get("forward_type", AddCommand.DEFAULT_TYPE)
+        self.remote_host = config.params.get("remote_host", None)
+        self.host_port = config.params.get("host_port", None)
+        self.name = config.params.get("name", None)
+        self.local_port = self.params.get("local_port", None)
+        self.ssh_server = self.params.get("ssh_server", None)
+        self.login_user = self.params.get("login_user", None)
 
     def run(self):
         f = open(self.config_path, 'r')
         targets = json.load(f)
-        if self.params["ssh_server"] is not None:
-            logger.info("Register target from params...")
-            targets[self.name] = self.__extract_target_from_params()
-        elif self.ssh_param_str is not None:
-            logger.info("Register target from argument string...")
-            self.__generate_from_string(targets)
-        else:
-            raise RuntimeError("given parameters are invalid: " + str(self.params))
+        new_target = self.__extract_target_from_params()
+        if self.ssh_param_str is not None:
+            logger.info("found argument...")
+            new_target = self.__generate_from_argument(new_target)
+        targets[self.name] = new_target
         f.close()
+
+        # TODO: validate generated target
 
         # write the target
         f = open(self.config_path, 'w')
@@ -31,32 +39,37 @@ class AddCommand(BaseCommand):
 
     def __extract_target_from_params(self):
         target = {
-            "type": self.params["forward_type"], "remote_host": self.params["remote_host"], "name": self.name,
-            "host_port": self.params["host_port"], "ssh_server": self.params["ssh_server"]
+            "type": self.forward_type, "remote_host": self.remote_host, "name": self.name,
+            "host_port": self.host_port, "ssh_server": self.ssh_server
         }
-
         if "login_user" in self.params:
-            target["login_user"] = self.params["login_user"]
+            target["login_user"] = self.login_user
 
         if self.params["forward_type"] == 'L':
-            target["local_port"] = self.params["local_port"]
+            target["local_port"] = self.local_port
         elif self.params["forward_type"] == 'R':
-            target["server_port"] = self.params["local_port"]
+            target["server_port"] = self.local_port
         else:
             raise RuntimeError("No such port forwarding type as " + self.params["forward_type"])
         return target
-    
-    def __generate_from_string(self, json_data):
-        first_port, host, second_port, login_user, ssh_server = self.__parse(self.ssh_param_str)
-        if self.params["forward_type"] is None or self.params["forward_type"] == "L":
-            json_data[self.name] = {"type": "L", "remote_host": host, "ssh_server": ssh_server, "name": self.name,
-                                    "local_port": first_port, "host_port": second_port, "login_user": login_user}
-        elif self.params["forward_type" == "R"]:
-            json_data[self.name] = {"type": self.params["forward_type"], "remote_host": host, "ssh_server": ssh_server,
-                                    "name": self.name,
-                                    "server_port": first_port, "host_port": second_port, "login_user": login_user}
+
+    def __generate_from_argument(self, target):
+        first_port, remote_host, second_port, login_user, ssh_server = self.__parse(self.ssh_param_str)
+
+        target["remote_host"] = remote_host
+        target["ssh_server"] = ssh_server
+        target["login_user"] = login_user
+
+        if target["type"] == "L":
+            target["local_port"] = first_port
+            target["host_port"] = second_port
+        elif self.params["forward_type"] == "R":
+            target["server_port"] = first_port
+            target["host_port"] = second_port
         else:
             raise RuntimeError("No type as " + self.params["forward_type"])
+
+        return target
 
     def __parse(self, ssh_param_str):
         if ssh_param_str.count('@'):
