@@ -14,7 +14,7 @@ class AddCommand(BaseCommand):
         self.ssh_param_str = config.params.get("ssh_argument", None)
         self.forward_type = config.params.get("forward_type", AddCommand.DEFAULT_TYPE)
         self.remote_host = config.params.get("remote_host", None)
-        self.host_port = config.params.get("host_port", None)
+        self.remote_port = config.params.get("remote_port", None)
         self.name = config.params.get("name", None)
         self.local_port = self.params.get("local_port", None)
         self.ssh_server = self.params.get("ssh_server", None)
@@ -40,7 +40,7 @@ class AddCommand(BaseCommand):
     def __extract_target_from_params(self):
         target = {
             "type": self.forward_type, "remote_host": self.remote_host, "name": self.name,
-            "host_port": self.host_port, "ssh_server": self.ssh_server
+            "remote_port": self.remote_port, "ssh_server": self.ssh_server
         }
         if "login_user" in self.params:
             target["login_user"] = self.login_user
@@ -62,10 +62,10 @@ class AddCommand(BaseCommand):
 
         if target["type"] == "L":
             target["local_port"] = first_port
-            target["host_port"] = second_port
+            target["remote_port"] = second_port
         elif self.params["forward_type"] == "R":
             target["server_port"] = first_port
-            target["host_port"] = second_port
+            target["remote_port"] = second_port
         else:
             raise RuntimeError("No type as " + self.params["forward_type"])
 
