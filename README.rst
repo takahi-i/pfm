@@ -75,10 +75,10 @@ The following is a sample of registration which forwards port 8888 in takahi-i-m
 
 ::
 
-    $pfm add -n image-classification "L 9999:localhost:8888 takahi-i-ml.aws.com"
+    $pfm add -n image-classification "9999:localhost:8888 takahi-i-ml.aws.com"
 
-As we see the above example is simple and just uses :code:`-n` option. Note that the first character :code:`L` indicates the port forward setting is local.
-When you want set remote, please set :code:`R`.
+As we see the above example is simple and just uses :code:`-n` option. Note that default forward type is set to local (L). If you want to set forward type
+to remote please specify the type with :code:`--forward_type` parameter.
 
 Generate ssh port forward parameters
 -------------------------------------

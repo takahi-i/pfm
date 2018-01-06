@@ -45,23 +45,23 @@ class AddCommand(BaseCommand):
         else:
             raise RuntimeError("No such port forwarding type as " + self.params["forward_type"])
         return target
-
+    
     def __generate_from_string(self, json_data):
-        forward_type, first_port, host, second_port, login_user, ssh_server = self.__parse(self.ssh_param_str)
-        if forward_type == "L":
-            json_data[self.name] = {"type": forward_type, "remote_host": host, "ssh_server": ssh_server, "name": self.name,
+        first_port, host, second_port, login_user, ssh_server = self.__parse(self.ssh_param_str)
+        if self.params["forward_type"] is None or self.params["forward_type"] == "L":
+            json_data[self.name] = {"type": "L", "remote_host": host, "ssh_server": ssh_server, "name": self.name,
                                     "local_port": first_port, "host_port": second_port, "login_user": login_user}
-        elif forward_type == "R":
-            json_data[self.name] = {"type": forward_type, "remote_host": host, "ssh_server": ssh_server, "name": self.name,
+        elif self.params["forward_type" == "R"]:
+            json_data[self.name] = {"type": self.params["forward_type"], "remote_host": host, "ssh_server": ssh_server,
+                                    "name": self.name,
                                     "server_port": first_port, "host_port": second_port, "login_user": login_user}
         else:
-            raise RuntimeError("No type as " + forward_type)
-
+            raise RuntimeError("No type as " + self.params["forward_type"])
 
     def __parse(self, ssh_param_str):
         if ssh_param_str.count('@'):
-            m = re.match(r'^([RL]) ?(\d+):(.+):(\d+) +(.+)@(.+)$', ssh_param_str)
-            return m.group(1), m.group(2), m.group(3),m.group(4), m.group(5), m.group(6)
+            m = re.match(r'^(\d+):(.+):(\d+) +(.+)@(.+)$', ssh_param_str)
+            return m.group(1), m.group(2), m.group(3), m.group(4), m.group(5)
         else:
-            m = re.match(r'^([RL]) ?(\d+):(.+):(\d+) +(.+)$', ssh_param_str)
-            return m.group(1), m.group(2), m.group(3),m.group(4), "", m.group(5)
+            m = re.match(r'^(\d+):(.+):(\d+) +(.+)$', ssh_param_str)
+            return m.group(1), m.group(2), m.group(3), None, m.group(4)
