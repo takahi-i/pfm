@@ -21,7 +21,7 @@ class ParameterCommand(BaseCommand):
             raise RuntimeError("Nothing type as " + setting["type"])
 
     def __server_param(self, setting):
-        if setting["login_user"] is None:
+        if setting["login_user"] is None or setting["login_user"] == "":
             return setting["ssh_server"]
         else:
             return setting["login_user"] + "@" + setting["ssh_server"]
