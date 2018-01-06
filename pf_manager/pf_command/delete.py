@@ -11,12 +11,15 @@ class DeleteCommand(BaseCommand):
 
     def run(self):
         f = open(self.config_path, 'r')
-        json_data = json.load(f)
-        json_data.pop(self.name)
-        logger.info('Deleted target ' + self.name + '...')
+        targets = json.load(f)
+        if self.name in targets:
+            targets.pop(self.name)
+            logger.info('Deleted target ' + self.name + '...')
+        else:
+            logger.warn("Port forward setting named " + self.name + "is not registered")
         f.close()
 
         # write the target
         f = open(self.config_path, 'w')
-        f.write(json.dumps(json_data, indent=4))
+        f.write(json.dumps(targets, indent=4))
         f.close()
