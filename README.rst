@@ -32,13 +32,30 @@ Usage
 Register ssh port forwarding
 -----------------------------
 
-
-``pfm add `` registers port forward settings.
+We register port forward settings with `pfm add` command.
 
 ::
 
     $ pfm add -n image-classification --local_port 9999 --host_port 8888 --ssh_server takahi-i-i.ml.aws.com --remote_host localhost
 
+`pfm add` provides the following options.
+
+::
+
+    Usage: pfm add [OPTIONS] [SSH_PARAM]
+    
+    add port forwarding target
+    
+    Options:
+        -n, --name TEXT        name of port fowarding
+        --forward_type TEXT    port forwarding type [L (local) or R (remote)]
+        --local_port INTEGER   local port
+        --host_port INTEGER    remote host port
+        --ssh_server TEXT      server to ssh login
+        --server_port INTEGER  server port
+        --remote_host TEXT     remote host for port forwarding
+        --login_user TEXT      login user of ssh server
+        --help                 Show this message and exit.
 
 Generate ssh port forward parameters
 -------------------------------------
