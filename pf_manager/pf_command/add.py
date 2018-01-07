@@ -23,11 +23,7 @@ class AddCommand(BaseCommand):
     def run(self):
         f = open(self.config_path, 'r')
         targets = json.load(f)
-        new_target = self.__extract_target_from_params()
-        if self.ssh_param_str is not None:
-            logger.info("found argument...")
-            new_target = self.__generate_from_argument(new_target)
-        targets[self.name] = new_target
+        targets[self.name] = self.generate_target()
         f.close()
 
         # TODO: validate generated target
@@ -36,6 +32,13 @@ class AddCommand(BaseCommand):
         f = open(self.config_path, 'w')
         f.write(json.dumps(targets, indent=4))
         f.close()
+
+    def generate_target(self):
+        new_target = self.__extract_target_from_params()
+        if self.ssh_param_str is not None:
+            logger.info("found argument...")
+            new_target = self.__generate_target_from_argument(new_target)
+        return new_target
 
     def __extract_target_from_params(self):
         target = {
@@ -54,7 +57,7 @@ class AddCommand(BaseCommand):
             raise RuntimeError("No such port forwarding type as " + self.params["forward_type"])
         return target
 
-    def __generate_from_argument(self, target):
+    def __generate_target_from_argument(self, target):
         first_port, remote_host, second_port, login_user, ssh_server = self.__parse(self.ssh_param_str)
 
         target["remote_host"] = remote_host
