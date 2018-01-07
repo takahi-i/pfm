@@ -41,7 +41,7 @@ def main(ctx, config):
 @click.argument('ssh-argument', required=False)
 def add(ctx, name, forward_type, local_port, remote_port, ssh_server, server_port, remote_host, login_user, ssh_argument):
     try:
-        AddCommand(ctx).run()
+        AddCommand(name, ssh_argument, forward_type, remote_host, remote_port, local_port, ssh_server, server_port, login_user, ctx).run()
     except RuntimeError as error:
         raise ClickException(error)
 

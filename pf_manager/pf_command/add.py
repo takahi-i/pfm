@@ -5,20 +5,20 @@ from pf_manager.util.log import logger
 
 
 class AddCommand(BaseCommand):
-
     DEFAULT_TYPE = "L"
 
-    def __init__(self, config):
+    def __init__(self, name, ssh_param_str, forward_type, remote_host, remote_port, local_port, ssh_server, server_port, login_user,
+                 config):
         super(AddCommand, self).__init__(config)
-        self.params = config.params
-        self.ssh_param_str = config.params.get("ssh_argument", None)
-        self.forward_type = config.params.get("forward_type", AddCommand.DEFAULT_TYPE)
-        self.remote_host = config.params.get("remote_host", None)
-        self.remote_port = config.params.get("remote_port", None)
-        self.name = config.params.get("name", None)
-        self.local_port = self.params.get("local_port", None)
-        self.ssh_server = self.params.get("ssh_server", None)
-        self.login_user = self.params.get("login_user", None)
+        self.name = name
+        self.ssh_param_str = ssh_param_str
+        self.forward_type = forward_type
+        self.remote_host = remote_host
+        self.remote_port = remote_port
+        self.local_port = local_port
+        self.ssh_server = ssh_server
+        self.server_port = server_port
+        self.login_user = login_user
 
     def run(self):
         f = open(self.config_path, 'r')
@@ -42,12 +42,13 @@ class AddCommand(BaseCommand):
             "type": self.forward_type, "remote_host": self.remote_host, "name": self.name,
             "remote_port": self.remote_port, "ssh_server": self.ssh_server
         }
-        if "login_user" in self.params:
+
+        if self.login_user is not None and len(self.login_user) > 0:
             target["login_user"] = self.login_user
 
-        if self.params["forward_type"] == 'L':
+        if self.forward_type == 'L':
             target["local_port"] = self.local_port
-        elif self.params["forward_type"] == 'R':
+        elif self.forward_type == 'R':
             target["server_port"] = self.local_port
         else:
             raise RuntimeError("No such port forwarding type as " + self.params["forward_type"])
@@ -63,11 +64,11 @@ class AddCommand(BaseCommand):
         if target["type"] == "L":
             target["local_port"] = first_port
             target["remote_port"] = second_port
-        elif self.params["forward_type"] == "R":
+        elif self.forward_type == "R":
             target["server_port"] = first_port
             target["remote_port"] = second_port
         else:
-            raise RuntimeError("No type as " + self.params["forward_type"])
+            raise RuntimeError("No type as " + self.forward_type)
 
         return target
 
