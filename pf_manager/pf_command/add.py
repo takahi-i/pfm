@@ -4,8 +4,25 @@ from pf_manager.pf_command.base import BaseCommand
 from pf_manager.util.log import logger
 
 
+def is_include_fields(target, fields):
+    for field in fields:
+        if field not in target or target[field] is None:
+            raise RuntimeError("Field " + field + " is needed for port forwarding")
+
+
+def check_fields(target):
+    if target["type"] == "L":
+        is_include_fields(target, AddCommand.LOCAL_FORWARDING_MUST_HAVE_FIELDS)
+    elif target["type"] == "R":
+        is_include_fields(target, AddCommand.REMOTE_FORWARDING_MUST_HAVE_FIELDS)
+    else:
+        raise RuntimeError("No forward type as " + target["type"])
+
+
 class AddCommand(BaseCommand):
     DEFAULT_TYPE = "L"
+    LOCAL_FORWARDING_MUST_HAVE_FIELDS = ["name", "remote_host", "remote_port", "local_port", "ssh_server"]
+    REMOTE_FORWARDING_MUST_HAVE_FIELDS = ["name", "remote_host", "remote_port", "ssh_server", "server_port"]
 
     def __init__(self, name, ssh_param_str, forward_type,
                  remote_host, remote_port, local_port,
@@ -33,8 +50,6 @@ class AddCommand(BaseCommand):
         targets[self.name] = self.generate_target()
         f.close()
 
-        # TODO: validate generated target
-
         # write the target
         f = open(self.config_path, 'w')
         f.write(json.dumps(targets, indent=4))
@@ -45,6 +60,7 @@ class AddCommand(BaseCommand):
         if self.ssh_param_str is not None:
             logger.info("found argument...")
             new_target = self.__generate_target_from_argument(new_target)
+        check_fields(new_target)
         return new_target
 
     def __extract_target_from_params(self):
@@ -69,7 +85,6 @@ class AddCommand(BaseCommand):
         elif self.forward_type == "R":
             target["server_port"] = first_port
             target["remote_port"] = second_port
-
 
         return target
 
