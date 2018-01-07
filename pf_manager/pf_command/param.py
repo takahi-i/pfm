@@ -3,9 +3,9 @@ from pf_manager.pf_command.base import BaseCommand
 
 
 class ParameterCommand(BaseCommand):
-    def __init__(self, config):
+    def __init__(self, config, name):
         super(ParameterCommand, self).__init__(config)
-        self.name = config.params["name"]
+        self.name = name
 
     def run(self):
         f = open(self.config_path, 'r')
