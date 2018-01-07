@@ -5,9 +5,9 @@ from pf_manager.util.log import logger
 
 
 class DeleteCommand(BaseCommand):
-    def __init__(self, config):
+    def __init__(self, config, name):
         super(DeleteCommand, self).__init__(config)
-        self.name = config.params["name"]
+        self.name = name
 
     def run(self):
         f = open(self.config_path, 'r')

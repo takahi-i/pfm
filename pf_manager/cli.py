@@ -41,7 +41,7 @@ def main(ctx, config):
 @click.argument('ssh-argument', required=False)
 def add(ctx, name, forward_type, local_port, remote_port, ssh_server, server_port, remote_host, login_user, ssh_argument):
     try:
-        AddCommand(ctx).run()
+        AddCommand(name, ssh_argument, forward_type, remote_host, remote_port, local_port, ssh_server, server_port, login_user, ctx.obj["config"]).run()
     except RuntimeError as error:
         raise ClickException(error)
 
@@ -49,7 +49,7 @@ def add(ctx, name, forward_type, local_port, remote_port, ssh_server, server_por
 @main.command(help='List existing port forward settings')
 @click.pass_context
 def list(ctx):
-    ListCommand(ctx).run()
+    ListCommand(ctx.obj["config"]).run()
 
 
 @main.command(help='Delete specified setting')
@@ -57,14 +57,14 @@ def list(ctx):
 @click.argument('name')
 @click.pass_context
 def delete(ctx, name):
-    DeleteCommand(ctx).run()
+    DeleteCommand(ctx.obj["config"], name).run()
 
 
 @main.command(help='Generate ssh port forward parameters')
 @click.argument('name')
 @click.pass_context
 def param(ctx, name):
-    ParameterCommand(ctx).run()
+    ParameterCommand(ctx.obj["config"], name).run()
 
 
 if __name__ == '__main__':

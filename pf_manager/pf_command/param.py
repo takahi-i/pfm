@@ -3,9 +3,9 @@ from pf_manager.pf_command.base import BaseCommand
 
 
 class ParameterCommand(BaseCommand):
-    def __init__(self, config):
+    def __init__(self, config, name):
         super(ParameterCommand, self).__init__(config)
-        self.name = config.params["name"]
+        self.name = name
 
     def run(self):
         f = open(self.config_path, 'r')
@@ -13,10 +13,10 @@ class ParameterCommand(BaseCommand):
         setting = json_data[self.name]
         if setting["type"] == "L":
             print("-{0} {1}:{2}:{3} {4}".format(setting["type"], setting["local_port"], setting["remote_host"],
-                                                setting["host_port"], self.__server_param(setting)))
+                                                setting["remote_port"], self.__server_param(setting)))
         elif setting["type"] == "R":
             print("-{0} {1}:{2}:{3} {4}".format(setting["type"], setting["server_port"], setting["remote_host"],
-                                                setting["host_port"], self.__server_param(setting)))
+                                                setting["remote_port"], self.__server_param(setting)))
         else:
             raise RuntimeError("Nothing type as " + setting["type"])
 

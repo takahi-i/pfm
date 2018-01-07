@@ -7,8 +7,7 @@
 import unittest
 from click.testing import CliRunner
 
-from pfm import pfm
-from pfm import cli
+from pf_manager import cli
 
 
 class TestPfm(unittest.TestCase):
@@ -28,7 +27,7 @@ class TestPfm(unittest.TestCase):
         runner = CliRunner()
         result = runner.invoke(cli.main)
         assert result.exit_code == 0
-        assert 'pfm.cli.main' in result.output
+        assert 'port forwarding manager' in result.output
         help_result = runner.invoke(cli.main, ['--help'])
         assert help_result.exit_code == 0
-        assert '--help  Show this message and exit.' in help_result.output
+        assert '--help' in help_result.output
