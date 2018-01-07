@@ -8,7 +8,7 @@ from pf_manager.util.util import convert_dictionary_to_2d_array
 
 class ListCommand(BaseCommand):
 
-    HEADERS = ["name", "type", "local_port", "remote_host", "host_port", "login_user", "ssh_server", "server_port"]
+    HEADERS = ["name", "type", "local_port", "remote_host", "remote_port", "login_user", "ssh_server", "server_port"]
 
     def __init__(self, config):
         super(ListCommand, self).__init__(config)

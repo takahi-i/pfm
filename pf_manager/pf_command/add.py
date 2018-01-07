@@ -7,12 +7,19 @@ from pf_manager.util.log import logger
 class AddCommand(BaseCommand):
     DEFAULT_TYPE = "L"
 
-    def __init__(self, name, ssh_param_str, forward_type, remote_host, remote_port, local_port, ssh_server, server_port, login_user,
-                 config):
+    def __init__(self, name, ssh_param_str, forward_type,
+                 remote_host, remote_port, local_port,
+                 ssh_server, server_port, login_user, config):
         super(AddCommand, self).__init__(config)
         self.name = name
         self.ssh_param_str = ssh_param_str
-        self.forward_type = forward_type
+
+        if forward_type is None:
+            logger.info("No port forward type is specified")
+            self.forward_type = AddCommand.DEFAULT_TYPE
+        else:
+            self.forward_type = forward_type
+
         self.remote_host = remote_host
         self.remote_port = remote_port
         self.local_port = local_port
@@ -43,16 +50,10 @@ class AddCommand(BaseCommand):
     def __extract_target_from_params(self):
         target = {
             "type": self.forward_type, "remote_host": self.remote_host, "name": self.name,
-            "remote_port": self.remote_port, "ssh_server": self.ssh_server
+            "remote_port": self.remote_port, "ssh_server": self.ssh_server,
+            "login_user": self.login_user, "local_port": self.local_port,
+            "server_port": self.server_port
         }
-
-        if self.login_user is not None and len(self.login_user) > 0:
-            target["login_user"] = self.login_user
-
-        if self.forward_type == 'L':
-            target["local_port"] = self.local_port
-        elif self.forward_type == 'R':
-            target["server_port"] = self.local_port
         return target
 
     def __generate_target_from_argument(self, target):
@@ -61,11 +62,6 @@ class AddCommand(BaseCommand):
         target["remote_host"] = remote_host
         target["ssh_server"] = ssh_server
         target["login_user"] = login_user
-
-        if target["type"] is None:
-            logger.info("No port forward type is specified")
-            logger.info("Set local type")
-            target["type"] = AddCommand.DEFAULT_TYPE
 
         if target["type"] == "L":
             target["local_port"] = first_port
