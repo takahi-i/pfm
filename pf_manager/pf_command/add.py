@@ -53,8 +53,6 @@ class AddCommand(BaseCommand):
             target["local_port"] = self.local_port
         elif self.forward_type == 'R':
             target["server_port"] = self.local_port
-        else:
-            raise RuntimeError("No such port forwarding type as " + self.params["forward_type"])
         return target
 
     def __generate_target_from_argument(self, target):
@@ -64,14 +62,18 @@ class AddCommand(BaseCommand):
         target["ssh_server"] = ssh_server
         target["login_user"] = login_user
 
+        if target["type"] is None:
+            logger.info("No port forward type is specified")
+            logger.info("Set local type")
+            target["type"] = AddCommand.DEFAULT_TYPE
+
         if target["type"] == "L":
             target["local_port"] = first_port
             target["remote_port"] = second_port
         elif self.forward_type == "R":
             target["server_port"] = first_port
             target["remote_port"] = second_port
-        else:
-            raise RuntimeError("No type as " + self.forward_type)
+
 
         return target
 
