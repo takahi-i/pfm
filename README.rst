@@ -5,7 +5,7 @@ pfm -- a ssh port forward manager for data engineers
 Local computers are not enough to handle large amount of data.
 In addition, we launch one Jupyter Notebook server for each machine learning task.
 Usually local computers are not enough to handle multiple machine learning tasks.
-And therefore data scientists do their experiments with Jupyter Notebook
+And therefore data scientists do their experiments with servers such as Jupyter Notebook or Kibana
 launched in remote hosts such as EC2
 
 To connect Jupyter Notebook servers in remote hosts, we use ssh port forwarding.
