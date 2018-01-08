@@ -10,7 +10,7 @@ from pf_manager.pf_command.add import AddCommand
 from pf_manager.pf_command.delete import DeleteCommand
 from pf_manager.pf_command.list import ListCommand
 from pf_manager.pf_command.param import ParameterCommand
-
+from pf_manager.util.log import logger
 
 class PFMGroup(click.Group):
     def invoke(self, ctx):
@@ -43,7 +43,8 @@ def add(ctx, name, forward_type, local_port, remote_port, ssh_server, server_por
     try:
         AddCommand(name, ssh_argument, forward_type, remote_host, remote_port, local_port, ssh_server, server_port, login_user, ctx.obj["config"]).run()
     except RuntimeError as error:
-        raise ClickException(error)
+        logger.warn("Failed to register...")
+        logger.warn(error)
 
 
 @main.command(help='List existing port forward settings')

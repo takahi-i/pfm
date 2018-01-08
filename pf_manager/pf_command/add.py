@@ -19,6 +19,12 @@ def check_fields(target):
         raise RuntimeError("No forward type as " + target["type"])
 
 
+def check_local_port_is_used(local_port, targets):
+    for target_name in targets:
+        target = targets[target_name]
+        if local_port == target["local_port"]:
+            raise RuntimeError("local port " + str(local_port) + " is already used in " + target_name)
+
 class AddCommand(BaseCommand):
     DEFAULT_TYPE = "L"
     LOCAL_FORWARDING_MUST_HAVE_FIELDS = ["name", "remote_host", "remote_port", "local_port", "ssh_server"]
@@ -47,13 +53,19 @@ class AddCommand(BaseCommand):
     def run(self):
         f = open(self.config_path, 'r')
         targets = json.load(f)
-        targets[self.name] = self.generate_target()
+        new_target = self.generate_consistent_target(targets)
+        targets[self.name] = new_target
         f.close()
 
         # write the target
         f = open(self.config_path, 'w')
         f.write(json.dumps(targets, indent=4))
         f.close()
+
+    def generate_consistent_target(self, targets):
+        new_target = self.generate_target()
+        check_local_port_is_used(new_target["local_port"], targets)
+        return new_target
 
     def generate_target(self):
         new_target = self.__extract_target_from_params()
