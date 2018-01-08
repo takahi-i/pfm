@@ -43,7 +43,7 @@ The following is a sample of adding port forward settings with command line opti
 
 ::
 
-    $ pfm add -n image-classification --local-port 9999 --host-port 8888 --ssh-server takahi-i-i.ml.aws.com --remote-host localhost
+    $ pfm add -n image-classification --local-port 9999 --remote-port 8888 --ssh-server myml.aws.com --remote-host localhost
 
 :code:`pfm add` provides the following options.
 
@@ -57,7 +57,7 @@ The following is a sample of adding port forward settings with command line opti
         -n, --name TEXT        name of port fowarding
         --forward-type TEXT    port forwarding type [L (local) or R (remote)]
         --local-port INTEGER   local port
-        --host-port INTEGER    remote host port
+        --remote-port INTEGER  remote host port
         --ssh-server TEXT      server to ssh login
         --server-port INTEGER  server port
         --remote-host TEXT     remote host for port forwarding
@@ -98,13 +98,13 @@ We can see the list of registered port forward settings.
 ::
 
     $ pfm list
-    +----------------------+------------+------------+--------------------------------+------------+-----------------+--------------------------------+--------------+
-    |         name         |    type    | local_port |          remote_host           | host_port  |   login_user    |           ssh_server           | server_port  |
-    +======================+============+============+================================+============+=================+================================+==============+
-    | image-processing     | L          | 9999       | localhost                      | 8888       | None            | my-ml-instance.aws.com         |              |
-    +----------------------+------------+------------+--------------------------------+------------+-----------------+--------------------------------+--------------+
-    | text-processing      | L          | 7777       | localhost                      | 8888       | None            | my-ml-instance-2.aws.com       |              |
-    +----------------------+------------+------------+--------------------------------+------------+-----------------+--------------------------------+--------------+
+    +----------------------+------------+------------+--------------------------------+--------------+-----------------+--------------------------------+--------------+
+    |         name         |    type    | local_port |          remote_host           | remote_port  |   login_user    |           ssh_server           | server_port  |
+    +======================+============+============+================================+==============+=================+================================+==============+
+    | image-processing     | L          | 9999       | localhost                      | 8888         | None            | my-ml-instance.aws.com         |              |
+    +----------------------+------------+------------+--------------------------------+--------------+-----------------+--------------------------------+--------------+
+    | text-processing      | L          | 7777       | localhost                      | 8888         | None            | my-ml-instance-2.aws.com       |              |
+    +----------------------+------------+------------+--------------------------------+--------------+-----------------+--------------------------------+--------------+
 
 Delete registerd forwarding element
 -----------------------------------
