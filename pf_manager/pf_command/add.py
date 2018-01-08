@@ -25,10 +25,28 @@ def check_local_port_is_used(local_port, targets):
         if local_port == target["local_port"]:
             raise RuntimeError("local port " + str(local_port) + " is already used in " + target_name)
 
+
+def automatic_port_assignment(new_target, targets):
+    if new_target["local_port"] is None and new_target["type"] == "L":
+        logger.info("local_port is not specified")
+        logger.info("allocating local_port for " + new_target["name"] + "...")
+        used_ports = set()
+        for target_name in targets:
+            used_ports.add(targets[target_name]["local_port"])
+
+        for port_number in range(AddCommand.PFM_BASE_PORT, AddCommand.PFM_MAX_INFERING_PORT, 1):
+            if not str(port_number) in used_ports:
+                new_target["local_port"] = str(port_number)
+                logger.info("local_port of " + new_target["name"] + " is set to " + str(port_number))
+                return
+
+
 class AddCommand(BaseCommand):
     DEFAULT_TYPE = "L"
     LOCAL_FORWARDING_MUST_HAVE_FIELDS = ["name", "remote_host", "remote_port", "local_port", "ssh_server"]
     REMOTE_FORWARDING_MUST_HAVE_FIELDS = ["name", "remote_host", "remote_port", "ssh_server", "server_port"]
+    PFM_BASE_PORT = 6000
+    PFM_MAX_INFERING_PORT = 7000
 
     def __init__(self, name, ssh_param_str, forward_type,
                  remote_host, remote_port, local_port,
@@ -64,7 +82,9 @@ class AddCommand(BaseCommand):
 
     def generate_consistent_target(self, targets):
         new_target = self.generate_target()
+        automatic_port_assignment(new_target, targets)
         check_local_port_is_used(new_target["local_port"], targets)
+        check_fields(new_target)
         return new_target
 
     def generate_target(self):
@@ -72,7 +92,6 @@ class AddCommand(BaseCommand):
         if self.ssh_param_str is not None:
             logger.info("found argument...")
             new_target = self.__generate_target_from_argument(new_target)
-        check_fields(new_target)
         return new_target
 
     def __extract_target_from_params(self):
