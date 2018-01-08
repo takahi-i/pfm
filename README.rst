@@ -34,7 +34,7 @@ Usage
 Register settings of ssh port forwarding
 -----------------------------------------
 
-:code:`pfm add` registers port forward settings. :code:`pfm add` provides two style of registrations.
+:code:`pfm add` registers port forward settings.
 
 Register settings with options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -64,7 +64,7 @@ The following is a sample of adding port forward settings with command line opti
         --login-user TEXT      login user of ssh server
         --help                 Show this message and exit.
 
-
+Note that :code:`pfm add` automatically assigns, :code:`--local-port` not to collide to other port forward settings.
 
 Register settings with a argument
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
