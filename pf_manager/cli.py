@@ -12,6 +12,14 @@ from pf_manager.pf_command.list import ListCommand
 from pf_manager.pf_command.param import ParameterCommand
 from pf_manager.util.log import logger
 
+PFM_VERSION = 0.2
+
+
+def print_version(ctx):
+    click.echo('Version ' + str(PFM_VERSION))
+    ctx.exit()
+
+
 class PFMGroup(click.Group):
     def invoke(self, ctx):
         ctx.obj = {}
@@ -39,9 +47,11 @@ def main(ctx, config):
 @click.option('--remote-host', type=str, help="Remote host for port forwarding", required=False)
 @click.option('--login-user', type=str, help="Login user of ssh server", required=False)
 @click.argument('ssh-argument', required=False)
-def add(ctx, name, forward_type, local_port, remote_port, ssh_server, server_port, remote_host, login_user, ssh_argument):
+def add(ctx, name, forward_type, local_port, remote_port, ssh_server, server_port, remote_host, login_user,
+        ssh_argument):
     try:
-        AddCommand(name, ssh_argument, forward_type, remote_host, remote_port, local_port, ssh_server, server_port, login_user, ctx.obj["config"]).run()
+        AddCommand(name, ssh_argument, forward_type, remote_host, remote_port, local_port, ssh_server, server_port,
+                   login_user, ctx.obj["config"]).run()
     except RuntimeError as error:
         logger.warn("Failed to register...")
         logger.warn(error)
@@ -66,6 +76,12 @@ def delete(ctx, name):
 @click.pass_context
 def param(ctx, name):
     ParameterCommand(ctx.obj["config"], name).run()
+
+
+@main.command(help='Show version number')
+@click.pass_context
+def version(ctx):
+    print_version(ctx)
 
 
 if __name__ == '__main__':
