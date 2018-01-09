@@ -1,20 +1,18 @@
 =====================================================
-pfm -- a ssh port forward manager for data engineers
+pfm -- a ssh port forward manager for data scientists
 =====================================================
 
-Local computers are not enough to handle large amount of data.
-In addition, we launch one Jupyter Notebook server for each machine learning task.
+Data scientists launch a Jupyter Notebook servers to tackle each machine learning task.
 Usually local computers are not enough to handle multiple machine learning tasks.
-And therefore data scientists do their experiments with servers such as Jupyter Notebook or Kibana
-launched in remote hosts such as EC2
+And therefore data scientists do their experiments in servers launched in remote hosts such as EC2 instances.
 
 To connect Jupyter Notebook servers in remote hosts, we use ssh port forwarding.
-Port forwarding is useful since using multiple servers, since we do not consume resources in local PC.
+Port forwarding is useful since we do not consume resources in local PC.
 
 Unfortunately, when connecting multiple server in different hosts and ports numbers, we easily forget
-the port or conflict the local port numbers.
+the port number or assign the local port number which is used in another task.
 
-pfm manager the remote hosts and port numbers used in port forwarding. Users understand which local
+pfm manages the remote hosts and port numbers used in port forwarding. Users understand which local
 ports are used and which ports are not. Once users register the port forwarding information, pfm generates
 ssh parameters any time specifying the task name.
 
@@ -64,7 +62,7 @@ The following is a sample of adding port forward settings with command line opti
         --login-user TEXT      login user of ssh server
         --help                 Show this message and exit.
 
-Note that :code:`pfm add` automatically assigns, :code:`--local-port` not to collide to other port forward settings.
+Note that when local port number  (:code:`--local-port`)  is not specified, :code:`pfm add` automatically assigns the local port not to collide to other port forward settings.
 
 Register settings with a argument
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -90,8 +88,8 @@ After the registration of port forward settings with :code:`pfm add` , we can ge
     $ ssh `pfm param image-classification`
 
 
-List registered ssh ports
---------------------------
+List registered ssh port forward settings
+------------------------------------------
 
 We can see the list of registered port forward settings.
 
@@ -106,8 +104,8 @@ We can see the list of registered port forward settings.
     | text-processing      | L          | 7777       | localhost                      | 8888         | None            | my-ml-instance-2.aws.com       |              |
     +----------------------+------------+------------+--------------------------------+--------------+-----------------+--------------------------------+--------------+
 
-Delete registerd forwarding element
------------------------------------
+Delete registered forwarding setting
+------------------------------------
 
 When a port forward settings is not needed, we can remove the setting with :code:`pfm delete` command
 
@@ -117,6 +115,6 @@ When a port forward settings is not needed, we can remove the setting with :code
 
 
 License
---------
+=======
 
 * Free software: MIT license
