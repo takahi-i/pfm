@@ -9,8 +9,14 @@ And therefore data scientists do their experiments in servers launched in remote
 To connect Jupyter Notebook servers in remote hosts, we use ssh port forwarding.
 Port forwarding is useful since we do not consume resources in local PC.
 
-Unfortunately, when connecting multiple server in different hosts and ports numbers, we easily forget
-the port number or assign the local port number which is used in another task.
+Unfortunately, when connecting servers in multiple remote hosts and ports numbers, we easily forget
+the port number or assign the local port number which is used in another task. Especially when there are multiple remote
+hosts and ssh servers as the following image, understanding the combinations of remote hosts and local ports are difficult.
+
+.. image:: images/port-forwarding.jpeg
+   :height: 50px
+   :width: 50px
+   :scale: 40%
 
 pfm manages the remote hosts and port numbers used in port forwarding. Users understand which local
 ports are used and which ports are not. Once users register the port forwarding information, pfm generates
