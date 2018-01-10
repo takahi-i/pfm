@@ -26,10 +26,19 @@ def check_local_port_is_used(local_port, targets):
             raise RuntimeError("local port " + str(local_port) + " is already used in " + target_name)
 
 
-def check_remote_port_is_used(remote_port, remote_host, targets):
+def check_remote_port_is_used(new_target, targets):
+    remote_port = new_target["remote_port"]
+    remote_host = new_target["remote_host"]
+    if remote_host == "localhost":
+        remote_host = new_target["ssh_server"]
+
     for target_name in targets:
         target = targets[target_name]
-        if target["remote_host"] == remote_host and target["remote_port"] == remote_port:
+        target_remote_host = target["remote_host"]
+        if target_remote_host == "localhost":
+            target_remote_host = target["ssh_server"]
+
+        if target_remote_host == remote_host and target["remote_port"] == remote_port:
             raise RuntimeError(
                 "remote port " + str(remote_port) + " in host " + remote_host + "is already used in " + target_name)
 
@@ -92,7 +101,7 @@ class AddCommand(BaseCommand):
         new_target = self.generate_target()
         automatic_port_assignment(new_target, targets)
         check_local_port_is_used(new_target["local_port"], targets)
-        check_remote_port_is_used(new_target["remote_port"], new_target["remote_host"], targets)
+        check_remote_port_is_used(new_target, targets)
         check_fields(new_target)
         return new_target
 
