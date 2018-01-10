@@ -44,7 +44,7 @@ def main(ctx, config):
 @click.option('--remote-port', type=int, help="Port of remote host", required=False)
 @click.option('--ssh-server', type=str, help="Server to ssh login", required=False)
 @click.option('--server-port', type=int, help="Server port", required=False)
-@click.option('--remote-host', type=str, help="Remote host for port forwarding", required=False)
+@click.option('--remote-host', type=str, help="Remote host for port forwarding", required=False, default='localhost')
 @click.option('--login-user', type=str, help="Login user of ssh server", required=False)
 @click.argument('ssh-argument', required=False)
 def add(ctx, name, forward_type, local_port, remote_port, ssh_server, server_port, remote_host, login_user,
