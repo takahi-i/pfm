@@ -28,19 +28,22 @@ def check_local_port_is_used(local_port, targets):
 
 def check_remote_port_is_used(new_target, targets):
     remote_port = new_target["remote_port"]
-    remote_host = new_target["remote_host"]
-    if remote_host == "localhost":
-        remote_host = new_target["ssh_server"]
+    remote_host = get_remote_host(new_target)
 
     for target_name in targets:
         target = targets[target_name]
-        target_remote_host = target["remote_host"]
-        if target_remote_host == "localhost":
-            target_remote_host = target["ssh_server"]
+        target_remote_host = get_remote_host(target)
 
         if target_remote_host == remote_host and target["remote_port"] == remote_port:
             raise RuntimeError(
                 "remote port " + str(remote_port) + " in host " + remote_host + "is already used in " + target_name)
+
+
+def get_remote_host(target):
+    target_remote_host = target["remote_host"]
+    if target_remote_host == "localhost":
+        target_remote_host = target["ssh_server"]
+    return target_remote_host
 
 
 def automatic_port_assignment(new_target, targets):
