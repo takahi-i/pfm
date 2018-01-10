@@ -39,7 +39,7 @@ class TestPfm(unittest.TestCase):
                                  None)
         self.assertRaises(RuntimeError, lambda: add_command.generate_consistent_target(targets))
 
-    def test_add_targe_without_local_port(self):
+    def test_add_target_without_local_port(self):
         targets = {'food-nonfood':
             {
                 'name': 'text-classification',
@@ -51,3 +51,15 @@ class TestPfm(unittest.TestCase):
                                  None)
 
         self.assertEqual("6001", add_command.generate_consistent_target(targets)["local_port"])
+
+    def test_fail_to_add_same_remote_port_in_same_host(self):
+        targets = {'food-nonfood':
+            {
+                'name': 'text-classification',
+                'local_port': '8888', 'login_user': None, 'remote_port': '9999', 'server_port': None,
+                'type': 'L', u'remote_host': 'my-ml-instance.ml.aws.com', 'ssh_server': 'my-ml-instance.ml.aws.com'
+            }
+        }
+        add_command = AddCommand("image-processing", None, "L", "my-ml-instance.ml.aws.com", "9999", "7777", "ssh-server-instance.ml.aws.com", None, None,
+                                 None)
+        self.assertRaises(RuntimeError, lambda: add_command.generate_consistent_target(targets))
