@@ -12,7 +12,7 @@ from pf_manager.pf_command.list import ListCommand
 from pf_manager.pf_command.param import ParameterCommand
 from pf_manager.util.log import logger
 
-PFM_VERSION = 0.2
+PFM_VERSION = 0.3
 
 
 def print_version(ctx):
