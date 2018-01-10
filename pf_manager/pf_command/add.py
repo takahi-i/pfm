@@ -46,8 +46,8 @@ def get_remote_host(target):
     return target_remote_host
 
 
-def automatic_port_assignment(new_target, targets):
-    if new_target["local_port"] is None and new_target["type"] == "L":
+def automatic_local_port_assignment(new_target, targets):
+    if new_target["local_port"] is None:
         logger.info("local_port is not specified")
         logger.info("allocating local_port for " + new_target["name"] + "...")
         used_ports = set()
@@ -58,6 +58,29 @@ def automatic_port_assignment(new_target, targets):
             if not str(port_number) in used_ports:
                 new_target["local_port"] = str(port_number)
                 logger.info("local_port of " + new_target["name"] + " is set to " + str(port_number))
+                return
+
+
+def automatic_remote_port_assignment(new_target, targets):
+    if new_target["remote_port"] is None:
+        logger.info("local_port is not specified")
+        logger.info("allocating remote_port for " + new_target["name"] + "...")
+        remote_server_name = get_remote_host(new_target)
+
+        used_ports = set()
+        for target_name in targets:
+            target = targets[target_name]
+            if target["remote_host"] == remote_server_name:
+                used_ports.add(target["remote_port"])
+            if target["remote_host"] == "localhost" and target["ssh_server"] == remote_server_name:
+                used_ports.add(target["remote_port"])
+            if target["ssh_server"] == remote_server_name and target["server_port"] is not None:
+                used_ports.add(target["server_port"])
+
+        for port_number in range(AddCommand.PFM_BASE_PORT, AddCommand.PFM_MAX_INFERING_PORT, 1):
+            if not str(port_number) in used_ports:
+                new_target["remote_port"] = str(port_number)
+                logger.info("remote_port of " + new_target["name"] + " is set to " + str(port_number))
                 return
 
 
@@ -102,7 +125,8 @@ class AddCommand(BaseCommand):
 
     def generate_consistent_target(self, targets):
         new_target = self.generate_target()
-        automatic_port_assignment(new_target, targets)
+        automatic_local_port_assignment(new_target, targets)
+        automatic_remote_port_assignment(new_target, targets)
         check_local_port_is_used(new_target["local_port"], targets)
         check_remote_port_is_used(new_target, targets)
         check_fields(new_target)
