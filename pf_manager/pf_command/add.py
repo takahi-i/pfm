@@ -54,7 +54,7 @@ def automatic_local_port_assignment(new_target, targets):
         for target_name in targets:
             used_ports.add(targets[target_name]["local_port"])
 
-        for port_number in range(AddCommand.PFM_BASE_PORT, AddCommand.PFM_MAX_INFERING_PORT, 1):
+        for port_number in range(AddCommand.PFM_BASE_PORT, AddCommand.PFM_MAX_INFERRING_PORT, 1):
             if not str(port_number) in used_ports:
                 new_target["local_port"] = str(port_number)
                 logger.info("local_port of " + new_target["name"] + " is set to " + str(port_number))
@@ -77,7 +77,7 @@ def automatic_remote_port_assignment(new_target, targets):
             if target["ssh_server"] == remote_server_name and target["server_port"] is not None:
                 used_ports.add(target["server_port"])
 
-        for port_number in range(AddCommand.PFM_BASE_PORT, AddCommand.PFM_MAX_INFERING_PORT, 1):
+        for port_number in range(AddCommand.PFM_BASE_PORT, AddCommand.PFM_MAX_INFERRING_PORT, 1):
             if not str(port_number) in used_ports:
                 new_target["remote_port"] = str(port_number)
                 logger.info("remote_port of " + new_target["name"] + " is set to " + str(port_number))
@@ -89,7 +89,7 @@ class AddCommand(BaseCommand):
     LOCAL_FORWARDING_MUST_HAVE_FIELDS = ["name", "remote_host", "remote_port", "local_port", "ssh_server"]
     REMOTE_FORWARDING_MUST_HAVE_FIELDS = ["name", "remote_host", "remote_port", "ssh_server", "server_port"]
     PFM_BASE_PORT = 49152
-    PFM_MAX_INFERING_PORT = 50152
+    PFM_MAX_INFERRING_PORT = 50152
 
     def __init__(self, name, ssh_param_str, forward_type,
                  remote_host, remote_port, local_port,
