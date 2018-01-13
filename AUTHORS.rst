@@ -6,6 +6,8 @@ Development Lead
 ----------------
 
 * Takahiko Ito <takahiko03@gmail.com>
+* Yohei Kikuta <diracdiego@gmail.com>
+
 
 Contributors
 ------------
