@@ -88,8 +88,8 @@ class AddCommand(BaseCommand):
     DEFAULT_TYPE = "L"
     LOCAL_FORWARDING_MUST_HAVE_FIELDS = ["name", "remote_host", "remote_port", "local_port", "ssh_server"]
     REMOTE_FORWARDING_MUST_HAVE_FIELDS = ["name", "remote_host", "remote_port", "ssh_server", "server_port"]
-    PFM_BASE_PORT = 6000
-    PFM_MAX_INFERING_PORT = 7000
+    PFM_BASE_PORT = 49152
+    PFM_MAX_INFERING_PORT = 50152
 
     def __init__(self, name, ssh_param_str, forward_type,
                  remote_host, remote_port, local_port,
