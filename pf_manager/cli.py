@@ -10,6 +10,7 @@ from pf_manager.pf_command.delete import DeleteCommand
 from pf_manager.pf_command.list import ListCommand
 from pf_manager.pf_command.param import ParameterCommand
 from pf_manager.pf_command.update import UpdateCommand
+from pf_manager.pf_command.connect import ConnectCommand
 from pf_manager.util.log import logger
 
 PFM_VERSION = '0.4.1'
@@ -95,6 +96,13 @@ def delete(ctx, name):
 @click.pass_context
 def param(ctx, name):
     ParameterCommand(ctx.obj["config"], name).run()
+
+
+@main.command(help='SSH connection with a specified setting')
+@click.argument('name')
+@click.pass_context
+def connect(ctx, name):
+    ConnectCommand(ctx.obj["config"], name).run()
 
 
 @main.command(help='Show version number')
