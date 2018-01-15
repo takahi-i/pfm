@@ -10,6 +10,7 @@ from pf_manager.pf_command.add import AddCommand
 from pf_manager.pf_command.delete import DeleteCommand
 from pf_manager.pf_command.list import ListCommand
 from pf_manager.pf_command.param import ParameterCommand
+from pf_manager.pf_command.update import UpdateCommand
 from pf_manager.util.log import logger
 
 PFM_VERSION = 0.3
@@ -52,6 +53,25 @@ def add(ctx, name, forward_type, local_port, remote_port, ssh_server, server_por
     try:
         AddCommand(name, ssh_argument, forward_type, remote_host, remote_port, local_port, ssh_server, server_port,
                    login_user, ctx.obj["config"]).run()
+    except RuntimeError as error:
+        logger.warn("Failed to register...")
+        logger.warn(error)
+
+
+@main.command(help='Update registered port forward setting')
+@click.pass_context
+@click.option('-n', '--name', type=str, help="Name of port fowarding", required=False)
+@click.option('--forward-type', type=str, help="Port forwarding type [L or R]", required=False, default='L')
+@click.option('--local-port', type=int, help="Local port", required=False)
+@click.option('--remote-port', type=int, help="Port of remote host", required=False)
+@click.option('--ssh-server', type=str, help="Server to ssh login", required=False)
+@click.option('--server-port', type=int, help="Server port", required=False)
+@click.option('--remote-host', type=str, help="Remote host for port forwarding", required=False, default='localhost')
+@click.option('--login-user', type=str, help="Login user of ssh server", required=False)
+def update(ctx, name, forward_type, local_port, remote_port, ssh_server, server_port, remote_host, login_user):
+    try:
+        UpdateCommand(name, forward_type, remote_host, remote_port, local_port, ssh_server, server_port,
+                      login_user, ctx.obj["config"]).run()
     except RuntimeError as error:
         logger.warn("Failed to register...")
         logger.warn(error)
