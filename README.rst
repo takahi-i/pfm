@@ -94,6 +94,17 @@ After the registration of port forward settings with :code:`pfm add` , we can ge
     $ ssh `pfm param image-classification`
 
 
+Update port forward settings
+----------------------------
+
+After the registration of port forward settings with :code:`pfm add` , we can modify ssh parameters with :code:`pfm update`.
+For example, the following command changes the port forwarding type  of `image-classification` setting from local to remote.
+
+::
+
+    $ pfm update image-classification --name image-classification --forward-type R
+
+
 List registered ssh port forward settings
 ------------------------------------------
 
