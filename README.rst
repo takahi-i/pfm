@@ -135,3 +135,9 @@ License
 =======
 
 * Free software: MIT license
+
+Contribution
+=============
+
+
+We are welcome any contribution. For details please see `CONTRIBUTING.rst CONTRIBUTING.rst`_
