@@ -140,4 +140,4 @@ Contribution
 =============
 
 
-We are welcome any contribution. For details please see `CONTRIBUTING.rst CONTRIBUTING.rst`_
+We are welcome any contribution. For details please see `CONTRIBUTING.rst <https://github.com/takahi-i/pfm/blob/master/CONTRIBUTING.rst>`_
