@@ -1,3 +1,7 @@
+.. image:: https://travis-ci.org/takahi-i/pfm.png?branch=master
+   :alt: Build status
+   :target: https://travis-ci.org/takahi-i/pfm
+
 =====================================================
 pfm -- a ssh port forward manager for data scientists
 =====================================================

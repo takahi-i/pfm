@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 """The setup script."""
-
+import pip
 from setuptools import setup, find_packages
+from pip.req import parse_requirements
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -11,10 +12,7 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [
-    'Click>=6.0',
-    'texttable>=1.0'
-]
+requirements = [ str(requirement.req) for requirement in parse_requirements('requirements.txt', session = pip.download.PipSession()) ]
 
 setup_requirements = [
     # TODO(takahi-i): put setup requirements (distutils extensions, etc.) here
@@ -48,11 +46,7 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
-        "Programming Language :: Python :: 2",
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
     ],
