@@ -106,7 +106,7 @@ For example, the following command changes the port forwarding type  of `image-c
 
 ::
 
-    $ pfm update image-classification --name image-classification --forward-type R
+    $ pfm update --name image-classification --forward-type R
 
 
 List registered ssh port forward settings
