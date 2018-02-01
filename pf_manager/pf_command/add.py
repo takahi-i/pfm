@@ -63,7 +63,7 @@ def automatic_local_port_assignment(new_target, targets):
 
 def automatic_remote_port_assignment(new_target, targets):
     if new_target["remote_port"] is None:
-        logger.info("local_port is not specified")
+        logger.info("remote_port is not specified")
         logger.info("allocating remote_port for " + new_target["name"] + "...")
         remote_server_name = get_remote_host(new_target)
 
