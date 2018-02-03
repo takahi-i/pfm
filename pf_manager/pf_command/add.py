@@ -20,11 +20,13 @@ def check_fields(target):
 
 
 def check_local_port_is_used(local_port, targets):
+    print("local_port: " + local_port);
+
+
     for target_name in targets:
         target = targets[target_name]
         if local_port == target["local_port"]:
-            raise RuntimeError("local port " + str(local_port) + " is already used in " + target_name)
-
+            logger.warn("local port {} is already used in {}".format(str(local_port), target_name))
 
 def check_remote_port_is_used(new_target, targets):
     remote_port = new_target["remote_port"]
@@ -35,9 +37,7 @@ def check_remote_port_is_used(new_target, targets):
         target_remote_host = get_remote_host(target)
 
         if target_remote_host == remote_host and target["remote_port"] == remote_port:
-            raise RuntimeError(
-                "remote port " + str(remote_port) + " in host " + remote_host + "is already used in " + target_name)
-
+            logger.warn("remote port {} in host {} is already used in {} ".format(str(remote_port), remote_host, target_name))
 
 def get_remote_host(target):
     target_remote_host = target["remote_host"]
