@@ -27,7 +27,7 @@ class TestPfm(unittest.TestCase):
                                  None)
         self.assertRaises(RuntimeError, lambda: add_command.generate_consistent_target({}))
 
-    def test_fail_to_add_same_local_port(self):
+    def test_add_same_local_port(self):
         targets = {'food-nonfood':
             {
                 'name': 'text-classification',
@@ -37,7 +37,7 @@ class TestPfm(unittest.TestCase):
         }
         add_command = AddCommand("image-processing", None, "L", "localhost", "8888", "8888", "my.aws.com", None, None,
                                  None)
-        self.assertRaises(RuntimeError, lambda: add_command.generate_consistent_target(targets))
+        self.assertEqual("8888", add_command.generate_consistent_target(targets)["local_port"])
 
     def test_add_target_without_local_port(self):
         targets = {'food-nonfood':
@@ -49,6 +49,7 @@ class TestPfm(unittest.TestCase):
         }
         add_command = AddCommand("image-processing", None, "L", "localhost", "8888", None, "my.aws.com", None, None,
                                  None)
+        self.assertEqual("49152", add_command.generate_consistent_target(targets)["local_port"])
 
     def test_add_target_without_remote_port(self):
         targets = {'food-nonfood':
@@ -85,7 +86,7 @@ class TestPfm(unittest.TestCase):
         add_command = AddCommand("image-processing", None, "L", "my-ml-instance.ml.aws.com", "9999", "7777",
                                  "ssh-server-instance.ml.aws.com", None, None,
                                  None)
-        self.assertRaises(RuntimeError, lambda: add_command.generate_consistent_target(targets))
+        self.assertEqual("9999", add_command.generate_consistent_target(targets)["remote_port"])
 
     def test_fail_to_add_same_remote_port_in_same_host2(self):
         targets = {'food-nonfood':
@@ -98,4 +99,4 @@ class TestPfm(unittest.TestCase):
         add_command = AddCommand("image-processing", None, 'L', 'localhost', '9999', '7777',
                                  'my-ml-instance.ml.aws.com', None, None,
                                  None)
-        self.assertRaises(RuntimeError, lambda: add_command.generate_consistent_target(targets))
+        self.assertEqual("9999", add_command.generate_consistent_target(targets)["remote_port"])
