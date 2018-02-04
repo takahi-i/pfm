@@ -140,8 +140,8 @@ License
 
 * Free software: MIT license
 
-Contribution
-=============
+For developers
+===============
 
 
-We are welcome any contribution. For details please see `CONTRIBUTING.rst <https://github.com/takahi-i/pfm/blob/master/CONTRIBUTING.rst>`_
+We are welcome any contribution. For details, please see `CONTRIBUTING.rst <https://github.com/takahi-i/pfm/blob/master/CONTRIBUTING.rst>`_.
