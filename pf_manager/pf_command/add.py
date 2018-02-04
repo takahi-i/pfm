@@ -20,9 +20,6 @@ def check_fields(target):
 
 
 def check_local_port_is_used(local_port, targets):
-    print("local_port: " + local_port);
-
-
     for target_name in targets:
         target = targets[target_name]
         if local_port == target["local_port"]:
