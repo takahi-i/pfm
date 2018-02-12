@@ -3,7 +3,6 @@
 """Console script for pfm."""
 
 import click
-from click import ClickException
 import os
 
 from pf_manager.pf_command.add import AddCommand
