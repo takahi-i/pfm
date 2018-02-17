@@ -12,11 +12,11 @@ from pf_manager.pf_command.param import ParameterCommand
 from pf_manager.pf_command.update import UpdateCommand
 from pf_manager.util.log import logger
 
-PFM_VERSION = 0.4
+PFM_VERSION = '0.4.1'
 
 
 def print_version(ctx):
-    click.echo('Version ' + str(PFM_VERSION))
+    click.echo('Version ' + PFM_VERSION)
     ctx.exit()
 
 
