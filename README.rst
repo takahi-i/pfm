@@ -97,6 +97,12 @@ After the registration of port forward settings with :code:`pfm add` , we can ge
 
     $ ssh `pfm param image-classification`
 
+Or we can also use :code:`pfm connect` in order to do same (Note that this command includes -A ssh option).
+
+::
+
+    $ pfm connect image-classification
+
 
 Update port forward settings
 ----------------------------
