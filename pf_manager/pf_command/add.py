@@ -91,7 +91,7 @@ class AddCommand(BaseCommand):
     PFM_BASE_PORT = 49152
     PFM_MAX_INFERRING_PORT = 50152
 
-    def __init__(self, name, ssh_param_str, forward_type,
+    def __init__(self, name, ssh_param_str, forward_type, authentication,
                  remote_host, remote_port, local_port,
                  ssh_server, server_port, login_user, config):
         super(AddCommand, self).__init__(config)
@@ -110,6 +110,7 @@ class AddCommand(BaseCommand):
         self.ssh_server = ssh_server
         self.server_port = server_port
         self.login_user = login_user
+        self.authentication = authentication
 
     def run(self):
         f = open(self.config_path, 'r')
@@ -144,7 +145,7 @@ class AddCommand(BaseCommand):
             "type": self.forward_type, "remote_host": self.remote_host, "name": self.name,
             "remote_port": self.remote_port, "ssh_server": self.ssh_server,
             "login_user": self.login_user, "local_port": self.local_port,
-            "server_port": self.server_port
+            "server_port": self.server_port, "authentication": self.authentication
         }
         return target
 

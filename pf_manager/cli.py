@@ -41,6 +41,8 @@ def main(ctx, config):
 @click.pass_context
 @click.option('-n', '--name', type=str, help="Name of port fowarding", required=False)
 @click.option('--forward-type', type=str, help="Port forwarding type [L or R]", required=False, default='L')
+@click.option('--authentication', '-A', type=bool, help="Enables forwarding of the authentication agent connection. ",
+              required=False, default=True)
 @click.option('--local-port', type=int, help="Local port", required=False)
 @click.option('--remote-port', type=int, help="Port of remote host", required=False)
 @click.option('--ssh-server', type=str, help="Server to ssh login", required=False)
@@ -48,11 +50,11 @@ def main(ctx, config):
 @click.option('--remote-host', type=str, help="Remote host for port forwarding", required=False, default='localhost')
 @click.option('--login-user', type=str, help="Login user of ssh server", required=False)
 @click.argument('ssh-argument', required=False)
-def add(ctx, name, forward_type, local_port, remote_port, ssh_server, server_port, remote_host, login_user,
-        ssh_argument):
+def add(ctx, name, forward_type, authentication, local_port, remote_port, ssh_server, server_port, remote_host,
+        login_user, ssh_argument):
     try:
-        AddCommand(name, ssh_argument, forward_type, remote_host, remote_port, local_port, ssh_server, server_port,
-                   login_user, ctx.obj["config"]).run()
+        AddCommand(name, ssh_argument, authentication,  forward_type, remote_host, remote_port, local_port, ssh_server,
+                   server_port, login_user, ctx.obj["config"]).run()
     except RuntimeError as error:
         logger.warn("Failed to register...")
         logger.warn(error)
