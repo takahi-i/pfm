@@ -91,26 +91,18 @@ class AddCommand(BaseCommand):
     PFM_BASE_PORT = 49152
     PFM_MAX_INFERRING_PORT = 50152
 
-    def __init__(self, name, ssh_param_str, forward_type, authentication,
-                 remote_host, remote_port, local_port,
-                 ssh_server, server_port, login_user, config):
-        super(AddCommand, self).__init__(config)
-        self.name = name
-        self.ssh_param_str = ssh_param_str
-
-        if forward_type is None:
-            logger.info("No port forward type is specified")
-            self.forward_type = AddCommand.DEFAULT_TYPE
-        else:
-            self.forward_type = forward_type
-
-        self.remote_host = remote_host
-        self.remote_port = remote_port
-        self.local_port = local_port
-        self.ssh_server = ssh_server
-        self.server_port = server_port
-        self.login_user = login_user
-        self.authentication = authentication
+    def __init__(self, **kwargs):
+        super(AddCommand, self).__init__(kwargs.get("config"))
+        self.name = kwargs.get("name")
+        self.ssh_param_str = kwargs.get("ssh_argument")
+        self.forward_type = kwargs.get("forward_type", AddCommand.DEFAULT_TYPE)
+        self.remote_host = kwargs.get("remote_host")
+        self.remote_port = kwargs.get("remote_port")
+        self.local_port = kwargs.get("local_port")
+        self.ssh_server = kwargs.get("ssh_server")
+        self.server_port = kwargs.get("server_port")
+        self.login_user = kwargs.get("login_user")
+        self.authentication = kwargs.get("authentication")
 
     def run(self):
         f = open(self.config_path, 'r')

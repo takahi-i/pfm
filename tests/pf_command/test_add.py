@@ -5,19 +5,16 @@ from pf_manager.pf_command.add import AddCommand
 
 class TestPfm(unittest.TestCase):
     def test_generate_target_with_options(self):
-        add_command = AddCommand("image-processing",
-                                 None, "L", True,
-                                 "localhost", "8888", "8888",
-                                 "my.aws.com", None, None, None)
+        add_command = AddCommand(name="image-processing", forward_type="L", authentication=True,
+                                 remote_host="localhost", remote_port="8888", local_port="8888",
+                                 ssh_server="my.aws.com")
         result = add_command.generate_target()
         self.assertEqual(result["type"], "L")
         self.assertEqual(result["name"], "image-processing")
         self.assertEqual(result["local_port"], "8888")
 
     def test_generate_target_with_argument(self):
-        add_command = AddCommand("image-processing",
-                                 "8888:localhost:8888 root@workbench.aws.com",
-                                 None, True, None, None, None, None, None, None, None)
+        add_command = AddCommand(name="image-processing", ssh_argument="8888:localhost:8888 root@workbench.aws.com")
         result = add_command.generate_target()
         self.assertEqual(result["type"], "L")
         self.assertEqual(result["name"], "image-processing")
@@ -26,9 +23,8 @@ class TestPfm(unittest.TestCase):
         self.assertEqual(result["login_user"], "root")
 
     def test_raise_exception_with_inadiquate_parameters(self):
-        add_command = AddCommand("image-processing", None, "L", True,
-                                 "localhost", None, "8888",
-                                 None, None, None, None)
+        add_command = AddCommand(name="image-processing", forward_type="L", authentication=True,
+                                 remote_host="localhost", local_port="8888")
         self.assertRaises(RuntimeError, lambda: add_command.generate_consistent_target({}))
 
     def test_add_same_local_port(self):
@@ -40,9 +36,8 @@ class TestPfm(unittest.TestCase):
             'type': 'L', 'remote_host': 'localhost',
             'ssh_server': 'my-ml-instance.ml.aws.com'
         }}
-        add_command = AddCommand("image-processing", None, "L", True, "localhost",
-                                 "8888", "8888", "my.aws.com", None, None,
-                                 None)
+        add_command = AddCommand(name="image-processing", forward_type="L", remote_host="localhost",
+                                 remote_port="8888", local_port="8888", ssh_server="my.aws.com")
         self.assertEqual("8888", add_command.generate_consistent_target(targets)["local_port"])
 
     def test_add_target_without_local_port(self):
@@ -55,9 +50,8 @@ class TestPfm(unittest.TestCase):
                 'ssh_server': 'my-ml-instance.ml.aws.com'
             }
         }
-        add_command = AddCommand("image-processing",
-                                 None, "L", True, "localhost", "8888",
-                                 None, "my.aws.com", None, None, None)
+        add_command = AddCommand(name="image-processing", forward_type="L", authentication=True,
+                                 remote_host="localhost", remote_port="8888", ssh_server="my.aws.com")
         self.assertEqual("49152", add_command.generate_consistent_target(targets)["local_port"])
 
     def test_add_target_without_remote_port(self):
@@ -70,9 +64,8 @@ class TestPfm(unittest.TestCase):
                 'ssh_server': 'my-ml-instance.ml.aws.com'
             }
         }
-        add_command = AddCommand("image-processing", None, "L", True,
-                                 "localhost", None, None,
-                                 "my-ml-instance.ml.aws.com", None, None, None)
+        add_command = AddCommand(name="image-processing", forward_type="L", authentication=True,
+                                 remote_host="localhost", ssh_server="my-ml-instance.ml.aws.com")
         self.assertEqual("49152", add_command.generate_consistent_target(targets)["remote_port"])
 
     def test_add_same_remote_port_in_different_host(self):
@@ -85,9 +78,9 @@ class TestPfm(unittest.TestCase):
                 'ssh_server': 'my-ml-instance.ml.aws.com'
             }
         }
-        add_command = AddCommand("image-processing", None,
-                                 "L", True, "my-ml-instance.ml-1.aws.com", "9999", "7777",
-                                 "ssh-server-instance.ml.aws.com", None, None, None)
+        add_command = AddCommand(name="image-processing", forward_type="L", remote_host="my-ml-instance.ml-1.aws.com",
+                                 remote_port="9999", local_port="7777",
+                                 ssh_server="ssh-server-instance.ml.aws.com")
         self.assertEqual("9999", add_command.generate_consistent_target(targets)["remote_port"])
 
     def test_fail_to_add_same_remote_port_in_same_host(self):
@@ -100,9 +93,9 @@ class TestPfm(unittest.TestCase):
                 'ssh_server': 'my-ml-instance.ml.aws.com'
             }
         }
-        add_command = AddCommand("image-processing", None, "L", True,
-                                 "my-ml-instance.ml.aws.com", "9999", "7777",
-                                 "ssh-server-instance.ml.aws.com", None, None, None)
+        add_command = AddCommand(name="image-processing", forward_type="L", authentication=True,
+                                 remote_host="my-ml-instance.ml.aws.com", remote_port="9999", local_port="7777",
+                                 ssh_server="ssh-server-instance.ml.aws.com")
         self.assertEqual("9999", add_command.generate_consistent_target(targets)["remote_port"])
 
     def test_fail_to_add_same_remote_port_in_same_host2(self):
@@ -112,7 +105,7 @@ class TestPfm(unittest.TestCase):
                 'type': 'L', 'remote_host': 'localhost', 'ssh_server': 'my-ml-instance.ml.aws.com'
             }
         }
-        add_command = AddCommand("image-processing", None, 'L', True, 'localhost', '9999', '7777',
-                                 'my-ml-instance.ml.aws.com', None, None,
-                                 None)
+        add_command = AddCommand(name="image-processing", forward_type='L', authentication=True,
+                                 remote_host='localhost', remote_port='9999', local_port='7777',
+                                 ssh_server='my-ml-instance.ml.aws.com')
         self.assertEqual("9999", add_command.generate_consistent_target(targets)["remote_port"])

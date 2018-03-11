@@ -53,8 +53,9 @@ def main(ctx, config):
 def add(ctx, name, forward_type, authentication, local_port, remote_port, ssh_server, server_port, remote_host,
         login_user, ssh_argument):
     try:
-        AddCommand(name, ssh_argument, authentication,  forward_type, remote_host, remote_port, local_port, ssh_server,
-                   server_port, login_user, ctx.obj["config"]).run()
+        AddCommand(name=name, ssh_argument=ssh_argument, authentication=authentication, forward_type=forward_type,
+                   remote_host=remote_host, remote_port=remote_port, local_port=local_port, ssh_server=ssh_server,
+                   server_port=server_port, login_user=login_user, config=ctx.obj["config"]).run()
     except RuntimeError as error:
         logger.warn("Failed to register...")
         logger.warn(error)
