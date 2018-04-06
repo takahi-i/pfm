@@ -22,15 +22,15 @@ class TestUtil(unittest.TestCase):
     def test_create_oredered_2d_array_from_dict(self):
         expected = [['name', 'local_port', 'login_user'], ['a_test', '8888', None], ['b_test', '8889', None]]
         actual = create_ordered_2d_array_from_dict(JSON_DATA, HEADERS)
-        if py_version < 3:
-            self.assertItemsEqual(expected, actual)
-        else:
-            self.assertCountEqual(expected, actual)
+        self.assertEqual(expected, actual)
 
     def test_convert_dictionary_to_2d_array(self):
         expected = [['b_test', '8889', None], ['a_test', '8888', None]]
         actual = convert_dictionary_to_2d_array(JSON_DATA, HEADERS)
-        self.assertEqual(expected, actual)
+        if py_version < 3:
+            self.assertItemsEqual(expected, actual)
+        else:
+            self.assertCountEqual(expected, actual)
 
     def test_sort_body_order(self):
         body = [['b_test', '8889', None], ['a_test', '8888', None]]
