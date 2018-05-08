@@ -6,8 +6,22 @@ import pip
 from setuptools import setup, find_packages
 from pip.req import parse_requirements
 
-with open('README.rst') as readme_file:
-    readme = readme_file.read()
+LONG_DESCRIPTION = """
+Data scientists launch a Jupyter Notebook servers to tackle each machine learning task. Usually local computers are not
+enough to handle multiple machine learning tasks. And therefore data scientists do their experiments in servers launched
+in remote hosts such as EC2 instances.
+
+To connect Jupyter Notebook servers in remote hosts, we use ssh port forwarding. Port forwarding is useful since we do
+not consume resources in local PC.
+
+Unfortunately, when connecting servers in multiple remote hosts and ports numbers, we easily forget the port number or
+assign the local port number which is used in another task. Especially when there are multiple remote hosts and ssh
+servers as the following image, understanding the combinations of remote hosts and local ports are difficult.
+
+pfm manages the remote hosts and port numbers used in port forwarding. Users understand which local ports are used and
+which ports are not. Once users register the port forwarding information, pfm generates ssh parameters any time
+specifying the task name.
+"""
 
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
@@ -26,7 +40,7 @@ setup(
     name='pfm',
     version='0.5.0',
     description="Tiny port forward manager",
-    long_description=readme + '\n\n' + history,
+    long_description=LONG_DESCRIPTION,
     author="Takahiko Ito",
     author_email='takahiko03@gmail.com',
     url='https://github.com/takahi-i/pfm',
