@@ -13,7 +13,7 @@ from pf_manager.pf_command.update import UpdateCommand
 from pf_manager.pf_command.connect import ConnectCommand
 from pf_manager.util.log import logger
 
-PFM_VERSION = '0.4.1'
+PFM_VERSION = '0.5.0'
 
 
 def print_version(ctx):
