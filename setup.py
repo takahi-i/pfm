@@ -38,7 +38,7 @@ test_requirements = [
 
 setup(
     name='pfm',
-    version='0.5.0',
+    version='0.5.1',
     description="Tiny port forward manager",
     long_description=LONG_DESCRIPTION,
     author="Takahiko Ito",
