@@ -146,6 +146,12 @@ License
 
 * Free software: MIT license
 
+Resources
+=========
+
+`Slides on pfm <https://speakerdeck.com/takahiko03/pfm>`_.
+
+
 For developers
 ===============
 
