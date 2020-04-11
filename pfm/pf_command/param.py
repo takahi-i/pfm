@@ -1,5 +1,5 @@
 import json
-from pf_manager.pf_command.base import BaseCommand
+from pfm.pf_command.base import BaseCommand
 
 
 class ParameterCommand(BaseCommand):

@@ -2,8 +2,8 @@ import json
 
 from texttable import Texttable
 
-from pf_manager.pf_command.base import BaseCommand
-from pf_manager.util.util import create_ordered_2d_array_from_dict
+from pfm.pf_command.base import BaseCommand
+from pfm.util.util import create_ordered_2d_array_from_dict
 
 
 class ListCommand(BaseCommand):
@@ -19,7 +19,7 @@ class ListCommand(BaseCommand):
         rows = create_ordered_2d_array_from_dict(json_data, ListCommand.HEADERS)
         table = Texttable()
         table.set_cols_align(["l", "l", "l", "l", "l", "l", "l", "l"])
-        table.set_cols_width([20,  10,  10,  30,  10,  15,  30,  12])
+        table.set_cols_width([20, 10, 10, 30, 10, 15, 30, 12])
         table.add_rows(rows)
         print(table.draw())
         f.close()

@@ -5,7 +5,7 @@ try:
 except ImportError:
     from io import StringIO
 
-from pf_manager.pf_command.param import ParameterCommand
+from pfm.pf_command.param import ParameterCommand
 
 
 class ConnectCommand(ParameterCommand):
