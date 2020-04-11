@@ -1,9 +1,9 @@
 import unittest
 
-from pf_manager.util.util import create_ordered_2d_array_from_dict
-from pf_manager.util.util import convert_dictionary_to_2d_array
-from pf_manager.util.util import sort_body_order
-from pf_manager.util.util import add_headers
+from pfm.util.util import create_ordered_2d_array_from_dict
+from pfm.util.util import convert_dictionary_to_2d_array
+from pfm.util.util import sort_body_order
+from pfm.util.util import add_headers
 
 import sys
 py_version = sys.version_info[0]

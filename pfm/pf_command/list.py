@@ -2,8 +2,8 @@ import json
 
 from texttable import Texttable
 
-from pf_manager.pf_command.base import BaseCommand
-from pf_manager.util.util import create_ordered_2d_array_from_dict
+from pfm.pf_command.base import BaseCommand
+from pfm.util.util import create_ordered_2d_array_from_dict
 
 
 class ListCommand(BaseCommand):

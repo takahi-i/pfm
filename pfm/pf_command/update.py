@@ -1,7 +1,7 @@
 import json
 
-from pf_manager.pf_command.base import BaseCommand
-from pf_manager.util.log import logger
+from pfm.pf_command.base import BaseCommand
+from pfm.util.log import logger
 
 
 class UpdateCommand(BaseCommand):

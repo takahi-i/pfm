@@ -5,13 +5,13 @@
 import click
 import os
 
-from pf_manager.pf_command.add import AddCommand
-from pf_manager.pf_command.delete import DeleteCommand
-from pf_manager.pf_command.list import ListCommand
-from pf_manager.pf_command.param import ParameterCommand
-from pf_manager.pf_command.update import UpdateCommand
-from pf_manager.pf_command.connect import ConnectCommand
-from pf_manager.util.log import logger
+from pfm.pf_command.add import AddCommand
+from pfm.pf_command.delete import DeleteCommand
+from pfm.pf_command.list import ListCommand
+from pfm.pf_command.param import ParameterCommand
+from pfm.pf_command.update import UpdateCommand
+from pfm.pf_command.connect import ConnectCommand
+from pfm.util.log import logger
 
 PFM_VERSION = '0.5.1'
 

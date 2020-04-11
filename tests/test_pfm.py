@@ -7,7 +7,7 @@
 import unittest
 from click.testing import CliRunner
 
-from pf_manager import cli
+from pfm import cli
 
 
 class TestPfm(unittest.TestCase):

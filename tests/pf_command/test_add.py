@@ -1,6 +1,6 @@
 import unittest
 
-from pf_manager.pf_command.add import AddCommand
+from pfm.pf_command.add import AddCommand
 
 
 class TestPfm(unittest.TestCase):

@@ -2,7 +2,7 @@ from abc import abstractmethod
 
 import os
 
-from pf_manager.util.log import logger
+from pfm.util.log import logger
 
 
 class BaseCommand(object):
